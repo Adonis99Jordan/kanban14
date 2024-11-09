@@ -24,8 +24,12 @@ if (process.env.PORT) {
   const __dirname = dirname(__filename);
 
   // Use the __dirname variable along with the join function from path to share the dist folder in client through express.static()
+  app.use(express.static(join(__dirname, 'client', 'dist', 'index.html')));
 
   // Create a catch-all route with a wildcard(*) to send the index.html file in client/dist
+  app.get('*', (req, res) => {
+    res.sendFile(join(__dirname, 'client', 'dist', 'index.html'))
+  })
 }
 
 sequelize.sync({force: forceDatabaseRefresh}).then(() => {
